@@ -1,9 +1,13 @@
-describe("primer test", () => {
-  it("revisar q 1 +1 sea 2 ", () => {
-    expect(1 + 1).toBe(2);
-  });
+import request from "supertest";
+import server from "../server";
 
-  it("revisar q 1 +1 no sea 3 ", () => {
-    expect(1 + 1).not.toBe(3);
+describe("GET /api", () => {
+  it("should send back a json response", async () => {
+    const response = await request(server).get("/api");
+
+    expect(response.status).toEqual(200);
+    expect(response.headers["content-type"]).toEqual(expect.stringContaining("json"));
+    expect(response.headers["content-type"]).toMatch(/json/);
+    expect(response.body.msg).toBe("Desde API");
   });
 });
